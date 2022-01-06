@@ -134,6 +134,7 @@ public class PaymentServiceImpl implements PaymentService {
 		List<IntegrationModule> modules =  getPaymentMethods(store);
 
 		for(IntegrationModule module : modules) {
+                    System.out.println("***MODULO***" +module.getModule());
 			if(module.getModule().equals(type)) {
 				
 				return module;
@@ -212,7 +213,11 @@ public class PaymentServiceImpl implements PaymentService {
 		try {
 			
 			String moduleCode = configuration.getModuleCode();
+                        System.out.println("moduleCode"+configuration.getModuleCode());
 			PaymentModule module = paymentModules.get(moduleCode);
+                        for (Map.Entry<String, PaymentModule> entry : paymentModules.entrySet()) {
+                            System.out.println("MAPA "+entry.getKey() + "/" + entry.getValue());
+                        }
 			if(module==null) {
 				throw new ServiceException("Payment module " + moduleCode + " does not exist");
 			}
@@ -566,6 +571,27 @@ public class PaymentServiceImpl implements PaymentService {
 
 		return transaction;
 	}
+        
+        @Override
+	public void validateCodi(Long mobileNumber)
+	throws ServiceException {
+		
+		if (StringUtils.isBlank(mobileNumber.toString())) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid codi number","messages.error.codi.number");
+		}
+		
+		Matcher m = Pattern.compile("[^\\d\\s.-]").matcher(mobileNumber.toString());
+		
+		if (m.find()) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid codi number","messages.error.codi.number");
+		}
+		/*
+		Matcher matcher = Pattern.compile("[\\s.-]").matcher(number);
+		
+		number = matcher.replaceAll("");
+		validateCreditCardDate(Integer.parseInt(month), Integer.parseInt(date));
+		validateCreditCardNumber(number, creditCard);*/
+	}
 	
 	@Override
 	public void validateCreditCard(String number, CreditCardType creditCard, String month, String date)
@@ -608,7 +634,7 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	
 	}
-	
+                	
 	@Deprecated
 	/**
 	 * Use commons validator CreditCardValidator

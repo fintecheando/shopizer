@@ -67,6 +67,14 @@ public interface PaymentService {
 	 */
 	void validateCreditCard(String number, CreditCardType creditCard, String month, String date)
 			throws ServiceException;
+        
+        /**
+	 * Validates if the mobile number input information are correct
+	 * @param mobileNumber	 
+	 * @throws ServiceException
+	 */
+	void validateCodi(Long mobileNumber)
+			throws ServiceException;
 
 	/**
 	 * Get the integration configuration

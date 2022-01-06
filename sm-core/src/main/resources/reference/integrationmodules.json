@@ -108,6 +108,17 @@
 
 	{
 		"module": "PAYMENT",
+		"code": "codi",
+		"type":"codi",
+		"version":"",
+		"regions": ["*"],
+		"image":"codi.png",
+		"configuration":[{"env":"TEST","scheme":"https","host":"codi.bitnamiapp.com","port":"443","uri":"/"},{"env":"PROD","scheme":"https","host":"codi.bitnamiapp.com","port":"443","uri":"/"}]
+
+	},
+
+	{
+		"module": "PAYMENT",
 		"code": "braintree",
 		"type":"creditcard",
 		"version":"",

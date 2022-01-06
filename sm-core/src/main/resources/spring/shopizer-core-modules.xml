@@ -47,6 +47,7 @@
 		<beans:entry key="beanstream" value-ref="beanstream" />
 		<beans:entry key="paypal-express-checkout" value-ref="paypal-ec" />
 		<beans:entry key="moneyorder" value-ref="moneyorder" />
+                <beans:entry key="codi" value-ref="codi" />
 		<beans:entry key="stripe" value-ref="stripe" />
 		<beans:entry key="stripe3" value-ref="stripe3" />
 		<beans:entry key="braintree" value-ref="braintree" />
@@ -79,6 +80,8 @@
 		class="com.salesmanager.core.business.modules.integration.payment.impl.MoneyOrderPayment" />
 	<beans:bean id="paypal-ec"
 		class="com.salesmanager.core.business.modules.integration.payment.impl.PayPalExpressCheckoutPayment" />
+        <beans:bean id="codi"
+		class="com.salesmanager.core.business.modules.integration.payment.impl.CodiPayment" />
 	<beans:bean id="stripe"
 		class="com.salesmanager.core.business.modules.integration.payment.impl.StripePayment" />
 	<beans:bean id="stripe3"
