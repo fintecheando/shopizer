@@ -87,12 +87,28 @@ public class PaymentApi {
 		
 		try {
 			
-			List<IntegrationModule> modules = paymentService.getPaymentMethods(merchantStore);
+		List<IntegrationModule> modules = paymentService.getPaymentMethods(merchantStore);
+                
+                
+                for (int i = 0; i < modules.size(); i++) {
+                    
+                    System.out.println("******MODULO******"+modules.get(i));
+                    IntegrationModule im = new IntegrationModule();
+                    im = modules.get(i);                    
+                    System.out.println("******CODIGO******"+im.getCode());
+                }
+                
 			
 		    Map<String, IntegrationModule> map = modules.stream()
 		    	      .collect(Collectors.toMap(IntegrationModule::getCode, module -> module));
+                    
+                    for (Map.Entry<String, IntegrationModule> entry : map.entrySet()) {
+                        System.out.println("MAPA "+entry.getKey() + "/" + entry.getValue().getCode());
+                    }
+                    System.out.println("******configuration.getCode()******"+configuration.getCode());
 		    
 		    IntegrationModule config = map.get(configuration.getCode());
+                    System.out.println("******config******"+config.getCode());
 
 			if (config == null) {
 				throw new ResourceNotFoundException("Payment module [" + configuration.getCode() + "] not found");
@@ -137,11 +153,13 @@ public class PaymentApi {
 	public IntegrationModuleConfiguration paymentModule(@PathVariable String code,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
-		try {
-
+		try {                        
 			// configured modules
 			Map<String, IntegrationConfiguration> configuredModules = paymentService
 					.getPaymentModulesConfigured(merchantStore);
+                        
+                        
+                        
 			IntegrationConfiguration config = configuredModules.get(code);
 			if (config == null) {
 				throw new ResourceNotFoundException("Payment module [" + code + "] not found");

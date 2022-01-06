@@ -867,6 +867,20 @@ public class OrderFacadeImpl implements OrderFacade {
 				throw serviceException;
 			}
 
+			// pre-validate codi
+			if (PaymentType.CODI.name().equals(paymentType)
+					&& "true".equals(coreConfiguration.getProperty("VALIDATE_CODI"))) {
+				String codi = order.getPayment().get("codi_mobile_number");
+
+				if (StringUtils.isBlank(codi) ) {
+					ObjectError error = new ObjectError("codi",
+							messages.getMessage("messages.error.codi", locale));
+					bindingResult.addError(error);
+					messagesResult.put("codi", messages.getMessage("messages.error.codi", locale));
+					return;
+				}
+			}
+
 			// pre-validate credit card
 			if (PaymentType.CREDITCARD.name().equals(paymentType)
 					&& "true".equals(coreConfiguration.getProperty("VALIDATE_CREDIT_CARD"))) {
